@@ -1,0 +1,50 @@
+{
+  "name": "vpn-manager",
+  "version": "2.0.0",
+  "description": "OpenVPN Manager",
+  "main": "./www/main.js",
+  "scripts": {
+    "start": "electron ./www/main.js",
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "repository": "",
+  "keywords": [
+    "Electron",
+    "OpenVpn"
+  ],
+  "author": "Richyan",
+  "license": "",
+  "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-builder": "^20.4.1"
+  },
+  "build": {
+    "appId": "com.schoolvpnclient.app",
+    "win": {
+      "icon": "resources/icon.ico",
+      "extraResources": [
+        "resources"
+      ],
+      "requestedExecutionLevel": "requireAdministrator",
+      "signAndEditExecutable": true,
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": true,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "allowElevation": true,
+      "deleteAppDataOnUninstall": true
+    }
+  },
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "child_process": "^1.0.2",
+    "jquery": "^3.3.1"
+  }
+}
