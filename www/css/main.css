@@ -3,65 +3,16 @@ body, html {
 	font-family: 'Roboto', Arial, sans-serif;
 	font-size: 14px;
   box-sizing: border-box;
-  width: 100wh;
-	/* height: 90vh; */
-	/* color: #fff; */
+  width: 100vw;
 	background: #E73C7E;
-	/* background-size: 400% 400%; */
 	-webkit-animation: Gradient 15s ease infinite;
 	-moz-animation: Gradient 15s ease infinite;
   animation: Gradient 15s ease infinite;
   overflow-x: hidden;
+  margin: 0;
   /* background-image: -webkit-linear-gradient(top, #f2f2f2, #e6e6e6);
   background-image: linear-gradient(top, #f2f2f2, #e6e6e6); */
 }
-header {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-start;
-  background: unset;
-  color: white;
-  align-self: stretch;
-  -webkit-app-region: drag
-}
-.footer{
-  position: fixed;
-  bottom: 0px;
-}
-
-/*---------------------------------------------*/
-a:focus {outline: none;}
-a:hover {text-decoration: none;}
-button {
-	outline: none;
-	border: none;
-	background: transparent;
-	cursor: pointer;
-}
-button:focus {outline: none;}
-
-.option {
-  color: white;
-  padding: 5px 20px;
-  /* font-size: .8rem; */
-  cursor: pointer;
-  -webkit-app-region: no-drag
-}
-
-.option:hover {
-  background: white;
-  color: #E73C7E;
-}
-
-.containers{
-  width: 200%;
-  display: flex;
-}
-.containers .container-wrap{
-  display: flex;
-  width: 100vw;
-}
-
 body::after, body::before,
 input::after,
 input::before,
@@ -74,22 +25,92 @@ body *::before {
   box-sizing: border-box;
 }
 
-h1 {
-  font-size: 2rem;
+header {
+  display: flex;
+  justify-content: flex-start;
+  background: unset;
+  color: white;
+  align-self: stretch;
+  /* -webkit-app-region: drag; */
+}
+header .header-title{
+  flex: 1; 
   text-align: center;
-  margin: 0 0 1em;
+  -webkit-app-region: drag;
+  position: relative;
+  top: 5px;
+}
+header .header-control{
+  text-align: right;
+  /* -webkit-app-region: drag; */
+}
+header button {
+	outline: none;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+header button:focus {outline: none;}
+header .header-title button{
+  color: #fff;
+}
+header .header-control .option {
+  color: white;
+  padding: 5px 20px;
+  /* font-size: .8rem; */
+  cursor: pointer;
+  -webkit-app-region: no-drag
+}
+header .header-control .option:hover {
+  background: white;
+  color: #E73C7E;
+}
+
+footer{
+  position: fixed;
+  bottom: 5px;
+  right: 1rem;
+  color: #fff;
+  text-align: right;
+  width: 100vw;
+}
+
+.containers{
+  width: 400%;
+  right: 200%;
+  display: flex;
+  position: relative;
+  transition: right .5s ease-in-out;
+}
+.containers.main{ right: 200%;}
+.containers.login{ right: 0%;}
+.containers .container-wrap{
+  display: flex;
+  width: 100vw;
+  height:90vh
+}
+.containers .container-wrap.forgot-wrap{
+  display: none;
+}
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0 0 2rem;
   color: #67666e;
 }
 
 .container {
   position: relative;
-  max-width: 400px;
-  margin: 3rem auto;
+  max-width: 300px;
+  margin: auto;
   background: #fff;
   width: 100%;
-  padding: 20px;
+  padding: 2rem;
   border-radius: 1px;
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+.container.extra-wide{
+  max-width: 400px;
 }
 /* .container:before {
   content: '';
@@ -112,7 +133,7 @@ h1 {
           transform: scale(1);
 } */
 
-.button-container {
+.form-button {
   text-align: center;
 }
 
@@ -125,8 +146,8 @@ fieldset {
 .form-radio,
 .form-group {
   position: relative;
-  margin-top: 2.25rem;
-  margin-bottom: 2.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-inline > .form-group,
@@ -157,9 +178,6 @@ fieldset {
 .form-group input {
   height: 1.9rem;
 }
-.form-group textarea {
-  resize: none;
-}
 .form-group select {
   width: 100%;
   font-size: 1rem;
@@ -176,7 +194,7 @@ fieldset {
   pointer-events: none;
   padding-left: 0.125rem;
   z-index: 1;
-  color: #f4516c;
+  color: grey;
   font-size: 1rem;
   font-weight: normal;
   -webkit-transition: all 0.28s ease;
@@ -184,7 +202,7 @@ fieldset {
 }
 .form-group .bar {
   position: relative;
-  border-bottom: 0.0625rem solid #f4516c;
+  border-bottom: 0.0825rem solid grey;
   display: block;
 }
 .form-group .bar::before {
@@ -203,16 +221,21 @@ fieldset {
 .form-group textarea {
   display: block;
   background: none;
-  padding: 0.125rem 0.125rem 0.0625rem;
+  /* padding: 0.125rem 0.125rem 0.0625rem; */
   font-size: 1rem;
   border-width: 0;
   border-color: transparent;
-  line-height: 1.9;
+  /* line-height: 1rem; */
   width: 100%;
   color: transparent;
   -webkit-transition: all 0.28s ease;
   transition: all 0.28s ease;
   box-shadow: none;
+}
+.form-group textarea {
+  resize: none;
+  height: 12rem;
+  font-size: 12px;
 }
 .form-group input[type="file"] {
   line-height: 1;
@@ -240,7 +263,7 @@ fieldset {
 .form-group textarea:valid ~ .control-label,
 .form-group textarea.form-file ~ .control-label,
 .form-group textarea.has-value ~ .control-label {
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   color: gray;
   top: -1rem;
   left: 0;
@@ -310,7 +333,7 @@ fieldset {
   border-radius: 50%;
   border: 0.125rem solid currentColor;
 }
-.radio .helper::after {
+/* .radio .helper::after {
   -webkit-transform: scale(0);
           transform: scale(0);
   background-color: #337ab7;
@@ -325,11 +348,11 @@ fieldset {
 }
 .radio input:checked ~ .helper::before {
   color: #337ab7;
-}
+} */
 
 .checkbox {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 .checkbox .helper {
   color: #999;
@@ -418,7 +441,7 @@ fieldset {
   border: 1px solid currentColor;
   font-size: 1.1rem;
   color: #4f93ce;
-  margin: 2rem 0;
+  margin: 1rem 0;
   padding: 0.75rem 3rem;
   cursor: pointer;
   -webkit-transition: background-color 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
@@ -464,4 +487,149 @@ fieldset {
   outline: none;
 }
 
+.msg-textarea {
+    padding: 10px;
+    height: 15rem;
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
+    border: 1px solid #ddd;
+    width: 98%;
+    font-size: 12px;
+    resize: none;
+  }
+  
+  /* Scrollbar styles */
+  .msg-textarea::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+    
+  .msg-textarea::-webkit-scrollbar-track {
+    width: 2px;
+    border: 1px dashed goldenrod;
+  }
+    
+  .msg-textarea::-webkit-scrollbar-thumb {
+    background: goldenrod;
+  }
+    
+  .msg-textarea::-webkit-scrollbar-thumb:hover {
+    background: darkgoldenrod;  
+  }
+.hidden{
+  display: none;
+}
 
+a{
+  text-decoration: none;
+  color: #E73C7E;
+  transition: color 0.3s ease;
+}
+
+ a:hover{
+  color: #333;
+}
+header nav{
+  display: flex;
+}
+nav{
+  margin-left: 10px;
+}
+#menuToggle{
+  display: block;
+  position: relative;
+  top: 10px;
+  /* left: 10px; */
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input[type='checkbox']{
+  display: block;
+  width: 36px;
+  height: 28px;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  
+  cursor: pointer;
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span{
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-bottom: 4px;
+  position: relative;
+  
+  background: #fff;
+  /* border-radius: 2px; */
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2){
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span{
+  opacity: 1;
+  transform: rotate(45deg) translate(0px, 0px);
+  background: #E73C7E;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3){
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2){
+  transform: rotate(-45deg) translate(0, 0px);
+}
+
+#menu{
+  position: absolute;
+  width: 80px;
+  margin: -100px 0 0 -15px;
+  padding: 10px;
+  padding-top: 100px;
+  opacity: .5;
+  /* display: none; */
+  background: #fff;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li{
+  padding: 10px 0;
+  /* font-size: px; */
+}
+
+#menuToggle input:checked ~ ul{
+  transform: none;
+  /* display: block; */
+}

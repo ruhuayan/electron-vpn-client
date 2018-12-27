@@ -1,4 +1,3 @@
-const electron = require('electron')
 const {app, BrowserWindow, globalShortcut} = require('electron')
 // const autoUpdater = require("electron-updater").autoUpdater;
 
@@ -14,12 +13,13 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800, 
-    height: 650,
+    height: 600,
     show: false,
-    backgroundColor: '#E73C7E',
+    // backgroundColor: '#E73C7E',
     titleBarStyle: 'customButtonsOnHover', 
     frame: false
   });
+  // mainWindow.setResizable(false);
   globalShortcut.register('CommandOrControl+O', () => {
     mainWindow.webContents.openDevTools();
   });
@@ -29,10 +29,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
-  // mainWindow.once('ready-to-show', () => {
-  // })
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+ 
   mainWindow.show()
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
