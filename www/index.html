@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 
-  <link href="https://cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
@@ -18,9 +19,9 @@
           <span></span>
           <span></span>
           <ul id="menu">
-            <li><a href="javascript: gotoMain()">Main</a></li>
-            <li><a href="javascript: gotoLogin()">Login</a></li>
-            <li><a href="javascript: gotoRegister()">Register</a></li>
+            <li><a href="javascript: gotoMain()">主页</a></li>
+            <li><a href="javascript: gotoLogin()">登陆</a></li>
+            <li><a href="javascript: gotoRegister()">注册</a></li>
           </ul>
         </div>
     </nav>
@@ -51,7 +52,7 @@
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" /><i class="helper"></i>I agree the terms & conditions
+              <input type="checkbox" /><i class="helper"></i>同意 使用条例
             </label>
           </div>
           <div class="form-button">
@@ -86,6 +87,11 @@
             <input type="password" name="password" required="required"/>
             <label for="input" class="control-label">密码 *</label><i class="bar"></i>
           </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" /><i class="helper"></i>记住我
+            </label>
+          </div>
           <div class="form-button">
             <button type="submit" class="button"><span>确定</span></button>
           </div>
@@ -109,7 +115,7 @@
           </div>
         </form>   
         <div class="connection-msg hidden" id="connectionWrap">
-          <textarea id="connectionMsg" class="msg-textarea"></textarea>
+          <textarea id="connectionMsg" class="msg-textarea" disabled>msg: </textarea>
         </div>
       </div>
     </div>

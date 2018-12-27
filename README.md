@@ -1,7 +1,5 @@
-#VPN-Client 
-### TO DO
-- Netflix & other website that block vpn's Support
-- Automatic OpenVPN installer package
-- Tray Icon and Functions
-- Multiple Locations/OpenVPN Files
+#ALGO-VPN-Client
+
+- Automatic powershell installer script
+- Multiple Locations Files
 - Proper Connect / Disconnect States

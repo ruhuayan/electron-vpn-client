@@ -14,7 +14,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 800, 
     height: 600,
-    show: false,
+    // show: false,
+    icon: path.join(__dirname, 'icon.ico'), 
     // backgroundColor: '#E73C7E',
     titleBarStyle: 'customButtonsOnHover', 
     frame: false

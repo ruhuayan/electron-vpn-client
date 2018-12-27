@@ -1,7 +1,7 @@
 {
   "name": "vpn-manager",
-  "version": "2.0.0",
-  "description": "OpenVPN Manager",
+  "version": "1.0.0",
+  "description": "Algo VPN Manager",
   "main": "./www/main.js",
   "scripts": {
     "start": "electron ./www/main.js",
@@ -21,7 +21,7 @@
     "electron-builder": "^20.4.1"
   },
   "build": {
-    "appId": "com.schoolvpnclient.app",
+    "appId": "com.richyan.vpn",
     "win": {
       "icon": "resources/icon.ico",
       "extraResources": [
@@ -43,8 +43,9 @@
     }
   },
   "dependencies": {
-    "bootstrap": "^4.2.1",
     "child_process": "^1.0.2",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "node-powershell": "^3.3.1",
+    "roboto-fontface": "^0.10.0"
   }
 }
