@@ -12,7 +12,7 @@
   "repository": "",
   "keywords": [
     "Electron",
-    "OpenVpn"
+    "RichyanVPN"
   ],
   "author": "Richyan",
   "license": "",
@@ -43,7 +43,6 @@
     }
   },
   "dependencies": {
-    "child_process": "^1.0.2",
     "jquery": "^3.3.1",
     "node-powershell": "^3.3.1",
     "roboto-fontface": "^0.10.0"
