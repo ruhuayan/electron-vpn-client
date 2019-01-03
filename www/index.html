@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-
   <!-- <link href="https://cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" type="text/css" href="css/materialdesignicons.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
@@ -36,26 +35,26 @@
   <div class="containers">
     <div class="container-wrap signup-wrap"> 
       <div class="container signup">
-        <form class="signup-form" name="signup-form" action="#" onsubmit="return false;" >
+        <form class="signup-form" id="signupForm" name="signupForm" action="javascript: register()" >
           <h1 class="container-title">创建账号</h1>
           <div class="form-group">
-            <input type="email" name="email" required="required"  />
+            <input type="email" name="email" required="required" />
             <label for="input" class="control-label">电邮 *</label><i class="bar"></i>
           </div>
           <div class="form-group">
-            <input type="password" name="password" required="required"/>
+            <input type="password" name="password" required="required" minlength = "5" />
             <label for="input" class="control-label">密码 *</label><i class="bar"></i>
           </div>
           <div class="form-group">
-            <input type="password" name="rpassword" required="required"/>
+            <input type="password" name="rpassword" required="required" minlength="5" />
             <label for="input" class="control-label">重输密码 *</label><i class="bar"></i>
           </div>
-          <div class="checkbox">
+          <div class="form-group checkbox">
             <label>
-              <input type="checkbox" /><i class="helper"></i>同意 使用条例
+              <input type="checkbox" required /><i class="helper"></i>同意 使用条例
             </label>
           </div>
-          <div class="form-button">
+          <div class="form-button form-group">
             <button type="submit" class="button"><span>确定</span></button>
           </div>
         </form>
@@ -76,20 +75,20 @@
       </div>
     </div>
     <div class="container-wrap login-wrap">  
-       <div class="container signin">
-        <form class="signin-form" name="signin-form" action="#" >
+       <div class="container login">
+        <form class="login-form" name="loginForm" id="loginForm" action="javascript: login()" >
           <h1 class="container-title">登陆</h1>
           <div class="form-group">
-            <input type="email" name="email" required="required"/>
+            <input type="email" name="email" required="required" />
             <label for="input" class="control-label">电邮 *</label><i class="bar"></i>
           </div>
           <div class="form-group">
-            <input type="password" name="password" required="required"/>
+            <input type="password" name="password" required="required" minlength = "5" />
             <label for="input" class="control-label">密码 *</label><i class="bar"></i>
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" /><i class="helper"></i>记住我
+              <input type="checkbox" name="remember" /><i class="helper"></i>记住我
             </label>
           </div>
           <div class="form-button">
