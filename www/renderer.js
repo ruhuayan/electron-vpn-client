@@ -3,7 +3,7 @@ const $ = require('jquery');
 
 const cw = remote.getCurrentWindow();
 const path = require('path');
-// var fs = require('fs');
+var fs = require('fs');
 const powershell = require('node-powershell');
 const ps = new powershell({
     executionPolicy: 'Bypass',
@@ -17,79 +17,100 @@ function connect() {
     if(!localStorage.getItem('jwt')){
         gotoLogin();
         return;
-    }else{
-        formSelectCountry.hide();
-        connectionBtn.attr('disabled', 'disabled');
-        connectionMsg.removeClass('hidden').html('状态： 连接 ... ');
-
-        getVPN(localStorage.getItem('jwt'))
-        .done(function(result){
-            if(!result || !result.script){
-                connectionMsg.html('Error: no script ...');
-                return;
-            }
-            
-            if (!VPN.exist) {
-                const adminPS = new powershell({
-                    executionPolicy: 'Bypass',
-                    noProfile: true
-                });
-                const scriptPath = path.join(__dirname, 'scripts', 'windows_richyan.ps1'); 
-                adminPS.addCommand('Start-Process powershell  " -ExecutionPolicy ByPass -File ' + scriptPath + ' -Add" -Verb runAs; exit'); 
-                adminPS.invoke().then(output => {
-                    
-                    connectionMsg.html(output); 
-                    setTimeout(()=>{ 
-                        ps.addCommand(`rasdial ${VPN.name}`);
-                        ps.invoke().then( out => {
-                            connectionMsg.html(out); 
-                            checkVPNConnection(VPN.name).then( status=> {
-                                if(status && status==='Connected'){
-                                    VPN.status = 'Connected';
-                                    connectionBtn.removeAttr('disabled').html('<span>断开</span>').attr("onClick", "disconnect();");
-                                    connectionMsg.html(JSON.stringify(VPN, null, ' '));
-                                } else {
-                                    VPN.status = 'Disconnected'
-                                }
-                            }, err=>{
-                                connectionMsg.html(err);
-                            });
-                        }).catch( err=> {
-                            connectionMsg.html(err);
-                            ps.dispose();
-                        });
-                    }, 1000); 
-                    
-                }).catch(err => {
-                    connectionMsg.html(err);
-                    adminPS.dispose();
-                });
-
-            }else {
-                ps.addCommand(`rasdial ${VPN.name}`);
-                ps.invoke().then(output => {
-                    connectionMsg.html(output); 
-                    checkVPNConnection(VPN.name).then( status=> {
-                        if(status && status==='Connected'){
-                            VPN.status = 'Connected';
-                            connectionBtn.removeAttr('disabled').html('<span>断开</span>').attr("onClick", "disconnect();");
-                            connectionMsg.html(JSON.stringify(VPN, null, ' '));
-                        } else {
-                            VPN.status = 'Disconnected'
-                        }
-                    }, err=>{
-                        connectionMsg.html(err);
-                    });
-                }).catch(err => {
-                    connectionMsg.html(err);
-                    ps.dispose();
-                });
-            } 
-
-        }).fail(function(jqXHR, textStatus){
-            console.log( "Request failed: " + textStatus );
-        });
     }
+    formSelectCountry.hide();
+    connectionBtn.attr('disabled', 'disabled');
+    connectionMsg.removeClass('hidden').html('状态： 验证客户权限... ');
+    
+    getVPN(localStorage.getItem('jwt'), document.getElementById('connectionForm').location_id.value)
+    .done(function(result){
+        connectionMsg.removeClass('hidden').html('状态： 验证完毕 ... ');
+        if(result && result.script){
+            const scriptPath = path.join(__dirname, 'script.ps1');
+            fs.writeFile(scriptPath, result.script, (err, data)=>{
+                if(err) {
+                    connectionMsg.html('Error on saving script ...');
+                    return;
+                } 
+                if (!VPN.exist) {
+                    const adminPS = new powershell({
+                        executionPolicy: 'Bypass',
+                        noProfile: true
+                    });
+                    adminPS.addCommand('Start-Process powershell  " -ExecutionPolicy ByPass -NoExit -File ' + scriptPath + ' -Add" -Verb runAs; exit'); 
+                    adminPS.invoke().then(output => {
+                        fs.unlink(scriptPath, function (err) {
+                            if (err) throw err;
+                            console.log('File deleted!');
+                        }); 
+                        connectionMsg.html(output); 
+                        
+                        setTimeout(()=>{ 
+                            ps.addCommand(`rasdial ${VPN.name}`);
+                            ps.invoke().then( out => {
+                                connectionMsg.html(out); 
+                                checkVPNConnection(VPN.name).then( status=> {
+                                    if(status && status==='Connected'){
+                                        VPN.status = 'Connected';
+                                        connectionBtn.removeAttr('disabled').html('<span>断开</span>').attr("onClick", "disconnect();");
+                                        connectionMsg.html(JSON.stringify(VPN, null, ' '));
+                                    } else {
+                                        VPN.status = 'Disconnected'
+                                    }
+                                }, err=>{
+                                    connectionMsg.html(err);
+                                });
+                            }).catch( err=> {
+                                connectionMsg.html(err);
+                                ps.dispose();
+                            });
+                        }, 1000); 
+                        
+                    }).catch(err => {
+                        connectionMsg.html(err);
+                        adminPS.dispose();
+                    });
+    
+                }else {
+                    ps.addCommand(`rasdial ${VPN.name}`);
+                    ps.invoke().then(output => {
+                        connectionMsg.html(output); 
+                        checkVPNConnection(VPN.name).then( status=> {
+                            if(status && status==='Connected'){
+                                VPN.status = 'Connected';
+                                connectionBtn.removeAttr('disabled').html('<span>断开</span>').attr("onClick", "disconnect();");
+                                connectionMsg.html(JSON.stringify(VPN, null, ' '));
+                            } else {
+                                VPN.status = 'Disconnected'
+                            }
+                        }, err=>{
+                            connectionMsg.html(err);
+                        });
+                    }).catch(err => {
+                        connectionMsg.html(err);
+                        ps.dispose();
+                    });
+                }
+
+
+            });
+            
+        } else {
+            connectionMsg.html('Error: no script ...');
+            return;
+        }
+
+    }).fail(function(jqXHR, textStatus){
+        if(jqXHR.responseJSON) {
+            connectionMsg.html( "Request failed: " + jqXHR.responseJSON.msg );
+        } else {
+            connectionMsg.html( "Request failed: " + textStatus );
+        }
+        setTimeout(()=>{
+            gotoLogin();
+        }, 300); 
+    });
+    
 };
 
 function disconnect(callback) {
@@ -162,7 +183,7 @@ function checkVPNConnection(vpn_name){
     });
 }
 
-function getVPN(jwt, location_id='montreal_1'){
+function getVPN(jwt, location_id){
     const formData = JSON.stringify({'jwt': localStorage.getItem('jwt'), 'location_id': location_id});
     return $.ajax({
         url: "https://www.richyan.com/vpn/api/vpn.php",
@@ -234,7 +255,7 @@ signupForm.rpassword.addEventListener('input', (event)=>{
 });
 function register() {
 
-    const formData = JSON.stringify($('#signupForm').serializeObject()); console.log(formData);
+    const formData = JSON.stringify($('#signupForm').serializeObject());
     $.ajax({
         method: "POST",
         url: 'https://www.richyan.com/vpn/api/create_user.php',
@@ -256,16 +277,18 @@ document.getElementById('loginForm').addEventListener('blur', ( event )=> {
     }
 }, true);
 function login() {
-    const formData = JSON.stringify($('#loginForm').serializeObject()); console.log(formData);
+    const formData = JSON.stringify($('#loginForm').serializeObject());
     $.ajax({
         url: "https://www.richyan.com/vpn/api/login.php",
         method : "POST",
         contentType : 'application/json',
         data : formData
-    }).done(function(result){console.log(result.jwt);
+    }).done(function(result){
          
         localStorage.setItem('jwt', result.jwt);
         gotoMain();
+        formSelectCountry.show();
+        connectionBtn.removeAttr('disabled');
 
     }).fail(function(jqXHR, textStatus){
         console.log( "Request failed: " + textStatus );

@@ -99,18 +99,18 @@
     </div>
     <div class="container-wrap connection-wrap">
       <div class="container connection">
-        <form class="connection-form" name="connection-form" action="#" onsubmit="return false;">
+        <form class="connection-form" name="connectionForm" id="connectionForm" action="javascript: connect();">
           <h1 class="container-title">连接 VPN</h1>
           <div class="form-group" id="formSelectCountry">
-            <select>
-              <option>亚洲（香港）</option>
-              <option>欧洲（荷兰）</option>
-              <option>美洲（美国）</option>
+            <select name="location_id">
+              <option value="hk">亚洲（香港）</option>
+              <option value="eu">欧洲（荷兰）</option>
+              <option value="us">美洲（美国）</option>
             </select>
             <i class="bar"></i>
           </div>
           <div class="form-button">
-            <button type="button" id="btnConnect" class="button" onclick="connect()" disabled ="disabled"><span>连接</span></button>
+            <button type="submit" id="btnConnect" class="button" disabled ="disabled"><span>连接</span></button>
           </div>
         </form>   
         <div class="connection-msg" id="connectionWrap">
